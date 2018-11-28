@@ -1,0 +1,14 @@
+﻿@model IEnumerable<Tweetinvi.Models.ITweet>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<ul>
+    @foreach (var tweet in Model)
+    {
+        <li>
+            @tweet.FullText
+            --@tweet.CreatedBy.Name
+        </li>
+    }
+</ul>

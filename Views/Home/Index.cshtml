@@ -1,0 +1,29 @@
+﻿@model SearchParamsModel
+@{
+    ViewData["Title"] = "Twitter Search";
+}
+
+<h2>Search Twitter</h2>
+<div class="form-group">
+    <form asp-action="SearchResults" method="post">
+        <p>
+          <label asp-for="Query">Search for: </label>
+          <input asp-for="Query" required />
+        </p>
+        <br />
+
+        <p>Optional:</p>
+        <p>
+          <label asp-for="Type">Search Type: </label>
+          <select asp-for="Type" asp-items="Html.GetEnumSelectList<Tweetinvi.Models.SearchResultType>()">
+            <option selected="selected" value="">Please select</option>
+          </select>
+        </p>
+        <p>
+          <label asp-for="MaxResults">Maximum Results</label>
+          <input asp-for="MaxResults" min=1 max=100 value=15 />
+        </p>
+        <br />
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+</div>
