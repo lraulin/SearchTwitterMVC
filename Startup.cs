@@ -58,7 +58,7 @@ namespace SearchTwitterMVC
                     template: "{controller=Home}/{action=Index}/{id?}");
                 routes.MapRoute(
                     name: "",
-                    template: "TweetMap/{lat:double}/{lng:double}");
+                    template: "TweetMap/{tweetId:double}");
             });
         }
     }

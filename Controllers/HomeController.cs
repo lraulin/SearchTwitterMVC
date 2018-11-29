@@ -4,8 +4,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using SearchTwitterMVC.Helpers;
+using SearchTwitterMVC.Models;
 using SearchTwitterMVC.ViewModels;
 using Tweetinvi;
+using Tweetinvi.Models;
 using Tweetinvi.Parameters;
 
 namespace SearchTwitterMVC.Controllers
@@ -26,7 +29,20 @@ namespace SearchTwitterMVC.Controllers
                 SearchType = searchParams.Type
             };
 
-            var matchingTweets = Search.SearchTweets(searchTweetsParameters);
+            // var matchingTweets = Search.SearchTweets(searchTweetsParameters);
+
+            // Filter to the first 5 results with location data
+            var matchingTweets = Search
+                .SearchTweets(searchTweetsParameters)
+                .Where(p => p.Coordinates != null)
+                .Take(5);
+
+            // Store the search results in TweetRepository so they are available application-wide.
+            if (!TweetRepository.SearchResults.IsNullOrEmpty())
+                TweetRepository.SearchResults.Clear();
+            if (!matchingTweets.IsNullOrEmpty())
+                foreach (var tweet in matchingTweets)
+                    TweetRepository.SearchResults.Add(tweet.Id, tweet);
 
             return View(matchingTweets);
         }
@@ -43,14 +59,10 @@ namespace SearchTwitterMVC.Controllers
             return "Lat: " + mapModel.Lat + "\nLong: " + mapModel.Long;
         }
 
-        public ViewResult TweetMap(double lat, double lng)
+        public ViewResult TweetMap(double tweetId)
         {
-            MapViewModel location = new MapViewModel
-            {
-                Lat = lat,
-                Long = lng
-            };
-            return View(location);
+            ITweet tweet = TweetRepository.SearchResults[tweetId];
+            return View(tweet);
         }
 
         public IActionResult About()

@@ -1,10 +1,15 @@
-﻿@model MapViewModel
+﻿@model Tweetinvi.Models.ITweet
 
-<h3>Tweet Location</h3>
+<blockquote class="blockquote">
+  <p class="mb-0">@Model.Text</p>
+  <footer class="blockquote-footer"><a href="@Model.CreatedBy.Url">@Model.CreatedBy.Name</a><cite title="Source Title"> from @Model.CreatedBy.Location</cite></footer>
+</blockquote>
+<h3>Posted from:</h3>
 <!--The div element for the map -->
 <div id="map"></div>
-<div id="lat" data=@Model.Lat></div>
-<div id="long" data=@Model.Long></div>
+<!--Invisible divs so the JS file can get the coordinates.-->
+<div id="lat" data=@Model.Coordinates.Latitude class="hidden"></div>
+<div id="long" data=@Model.Coordinates.Longitude class="hidden"></div>
 
 @section Scripts {
     <script src="/js/tweetMap.js"></script>
