@@ -1,4 +1,4 @@
-namespace SearchTwitterMVC.Models
+namespace SearchTwitterMVC.ViewModels
 {
     public class MapModel
     {

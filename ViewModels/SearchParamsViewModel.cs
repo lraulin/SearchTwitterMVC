@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Tweetinvi.Models;
 
-namespace SearchTwitterMVC.Models
+namespace SearchTwitterMVC.ViewModels
 {
     public class SearchParamsModel
     {

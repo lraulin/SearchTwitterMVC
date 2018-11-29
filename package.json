@@ -1,0 +1,11 @@
+{
+  "name": "SearchTwitterMVC",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/lraulin/SearchTwitterMVC.git",
+  "author": "Lee Raulin <leeraulin@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "eslint": "^5.9.0"
+  }
+}

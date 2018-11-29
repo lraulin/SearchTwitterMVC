@@ -4,6 +4,7 @@
 
 # Libraries
 npm_packages/
+node_modules/
 lib/
 dist/
 
@@ -12,6 +13,7 @@ dist/
 project.lock.json
 .DS_Store
 *.pyc
+*.lock
 
 # Visual Studio/Code
 .vscode

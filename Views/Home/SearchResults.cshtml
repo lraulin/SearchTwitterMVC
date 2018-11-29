@@ -3,12 +3,12 @@
     ViewData["Title"] = "Home Page";
 }
 
-<ul>
     @foreach (var tweet in Model)
     {
-        <li>
-            @tweet.FullText
-            --@tweet.CreatedBy.Name
-        </li>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    @tweet.FullText
+                </div>
+                <div class="panel-footer">Posted by @tweet.CreatedBy.Name on @tweet.CreatedAt.ToString()</div>
+            </div>
     }
-</ul>
