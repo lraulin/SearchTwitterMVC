@@ -17,7 +17,6 @@ namespace SearchTwitterMVC.Controllers
             return View();
         }
 
-        [HttpPost]
         public ViewResult SearchResults(SearchParamsModel searchParams)
         {
             Auth.SetCredentials(MyCredentials.GenerateCredentials());
@@ -39,9 +38,19 @@ namespace SearchTwitterMVC.Controllers
         }
 
         [HttpPost]
-        public string Map(MapModel mapModel)
+        public string Map(MapViewModel mapModel)
         {
             return "Lat: " + mapModel.Lat + "\nLong: " + mapModel.Long;
+        }
+
+        public ViewResult TweetMap(double lat, double lng)
+        {
+            MapViewModel location = new MapViewModel
+            {
+                Lat = lat,
+                Long = lng
+            };
+            return View(location);
         }
 
         public IActionResult About()

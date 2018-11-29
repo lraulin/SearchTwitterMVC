@@ -31,7 +31,6 @@ namespace SearchTwitterMVC
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -55,8 +54,11 @@ namespace SearchTwitterMVC
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                        name: "default",
-                        template: "{controller=Home}/{action=Index}/{id?}");
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+                routes.MapRoute(
+                    name: "",
+                    template: "TweetMap/{lat:double}/{lng:double}");
             });
         }
     }

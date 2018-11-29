@@ -1,0 +1,13 @@
+﻿@model MapViewModel
+
+<h3>Tweet Location</h3>
+<!--The div element for the map -->
+<div id="map"></div>
+<div id="lat" data=@Model.Lat></div>
+<div id="long" data=@Model.Long></div>
+
+@section Scripts {
+    <script src="/js/tweetMap.js"></script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=@MyCredentials.GOOGLE_MAPS_APIKEY&callback=initMap"></script>
+}

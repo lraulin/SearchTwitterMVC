@@ -5,10 +5,18 @@
 
     @foreach (var tweet in Model)
     {
-            <div class="panel panel-default">
-                <div class="panel-body">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
                     @tweet.FullText
                 </div>
-                <div class="panel-footer">Posted by @tweet.CreatedBy.Name on @tweet.CreatedAt.ToString()</div>
+                <div class="panel-footer">
+                  Posted by @tweet.CreatedBy.Name on @tweet.CreatedAt.ToString()
+                  @if (@tweet.Coordinates != null)
+                  {
+                    <a asp-action="TweetMap" asp-route-lat=@tweet.Coordinates.Latitude asp-route-lng=@tweet.Coordinates.Longitude>
+                      <span class="glyphicon glyphicon-map-marker"></span>
+                    </a>
+                  }
+                 </div>
             </div>
     }
