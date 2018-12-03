@@ -3,6 +3,41 @@
   ViewData["Title"] = "Home Page";
 }
 
+<script>
+  const cities = [];
+  const coords = [];
+  function initMap() {
+    // Roughly the center of USA
+    const position = { lat: 40, lng: -100 };
+
+    // The map, centered in USA
+    const map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 4,
+      center: position
+    });
+    // Initialize geocoder for finding lat/long of cities.
+    geocoder = new google.maps.Geocoder();
+
+    coords.forEach(position => {
+      const marker = new google.maps.Marker({map, position });
+    });
+
+    cities.forEach(city => {
+      geocoder.geocode({'address': city}, function(results, status) {
+        if (status === 'OK') {
+          const marker = new google.maps.Marker({
+            map,
+            position: results[0].geometry.location
+          });
+        } else {
+          console.log('Geocode was not successful for the following reason: ' + status);
+        }
+      });
+    });
+  }
+</script>
+
+<div id="map"></div>
 @if (!Model.IsNullOrEmpty<Tweetinvi.Models.ITweet>())
 {
   @foreach (var tweet in Model)
@@ -21,9 +56,27 @@
         }
       </div>
     </div>
+    @if (tweet.Coordinates != null)
+    {
+      <script>
+          coords.push({lat: @tweet.Coordinates.Latitude, lng: @tweet.Coordinates.Longitude});
+      </script>
+    }
+    else if (!tweet.CreatedBy.Location.IsNullOrEmpty())
+    {
+      <p>Location: @tweet.CreatedBy.Location</p>
+      <script>
+          cities.push("@tweet.CreatedBy.Location");
+      </script>
+    }
   }
 }
 else
 {
   <p>No matching Tweets with location data were found.</p>
+}
+
+@section Scripts {
+  <script async defer
+          src="https://maps.googleapis.com/maps/api/js?key=@MyCredentials.GOOGLE_MAPS_APIKEY&callback=initMap"></script>
 }

@@ -17,32 +17,37 @@ namespace SearchTwitterMVC.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            var indexViewModel = new IndexViewModel();
+            return View(indexViewModel);
         }
 
-        public ViewResult SearchResults(SearchParamsModel searchParams)
+        [HttpPost]
+        public ViewResult SearchResults(IndexViewModel searchParams)
         {
             Auth.SetCredentials(MyCredentials.GenerateCredentials());
 
             SearchTweetsParameters searchTweetsParameters = new SearchTweetsParameters(searchParams.Query)
             {
-                SearchType = searchParams.Type
+                SearchType = searchParams.Type,
+                MaximumNumberOfResults = searchParams.MaxResults
             };
 
-            // var matchingTweets = Search.SearchTweets(searchTweetsParameters);
+            if (searchParams.HasLocation)
+            {
+                searchTweetsParameters.GeoCode.Coordinates.Latitude = searchParams.Lat;
+                searchTweetsParameters.GeoCode.Coordinates.Longitude = searchParams.Long;
+                // TODO: only miles for now...
+                searchTweetsParameters.GeoCode.DistanceMeasure = DistanceMeasure.Miles;
+            }
 
-            // Filter to the first 5 results with location data
-            var matchingTweets = Search
-                .SearchTweets(searchTweetsParameters)
-                .Where(p => p.Coordinates != null)
-                .Take(5);
+            var matchingTweets = Search.SearchTweets(searchTweetsParameters);
+
+            if (searchParams.HasLocation)
+                matchingTweets = matchingTweets.Where(p => p.Coordinates != null || !p.CreatedBy.Location.IsNullOrEmpty());
 
             // Store the search results in TweetRepository so they are available application-wide.
             if (!TweetRepository.SearchResults.IsNullOrEmpty())
                 TweetRepository.SearchResults.Clear();
-            if (!matchingTweets.IsNullOrEmpty())
-                foreach (var tweet in matchingTweets)
-                    TweetRepository.SearchResults.Add(tweet.Id, tweet);
 
             return View(matchingTweets);
         }

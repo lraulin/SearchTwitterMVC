@@ -7,5 +7,6 @@ namespace SearchTwitterMVC.Models
     {
         public static Dictionary<double, ITweet> SearchResults { get; set; } = new Dictionary<double, ITweet>();
         public static ITweet SelectedTweet { get; set; }
+        public static bool IndexViewMapVisible { get; set; } = false;
     }
 }
