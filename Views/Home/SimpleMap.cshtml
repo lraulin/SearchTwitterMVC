@@ -1,0 +1,65 @@
+﻿@{
+  ViewData["Title"] = "A Simple Map";
+}
+<div class="container-fluid full-height">
+  <div class="row full-height">
+    <div class="col-xs-2 full-height white-container" id="leftCol">
+      <div class="form-group" id="categories">
+        <label class="section-title">Data Source</label><br />
+        <label class="data-type"><input type="checkbox" checked id="twitterCkBx"> Twitter<img class="icon-img" src="images/blue_marker.png" /></label><br />
+        <label class="data-type"><input type="checkbox" checked id="crisisCkBx"> Crisis Management Center<img class="icon-img" src="images/red_marker.png" /></label>
+        <label class="section-title">Incident Type</label><br />
+        <label><input type="checkbox" checked id="allIncidentsCkBx"> All</label><br />
+        <label><input type="checkbox" id="cyclistCrashCkBx"> Cyclist Crash</label><br />
+        <label><input type="checkbox" id="transitCrashCkBx"> Transit Crash</label><br />
+        <label><input type="checkbox" id="suicideCkBx"> Transportation-related Suicide</label><br />
+        <label><input type="checkbox" id="pipelineCkBx"> Pipeline Incident</label><br />
+        <label><input type="checkbox" id="railCkBx"> Rail Incident</label><br />
+        <label><input type="checkbox" id="hazmatCkBx"> HAZMAT Incident</label><br />
+        <label><input type="checkbox" id="roadHazardOrClosureCkBx"> Road Hazard or Closure</label><br />
+        <label><input type="checkbox" id="unsafeBehaviorCkBx"> Unsafe Behavior</label><br />
+        <label><input type="checkbox" id="droneCkBx"> Drone Incident</label><br />
+        <label><input type="checkbox" id="pedestrianCrashCkBx"> Pedestrian Crash</label><br />
+        <label><input type="checkbox" id="truckCrashCkBx"> Truck Crash</label><br />
+        <label><input type="checkbox" id="fatalCrashCkBx"> Fatal Crash</label><br />
+        <label><input type="checkbox" id="busCrashCkBx"> Bus Crash</label><br />
+      </div>
+      <div class="form-group">
+        <label>Start Date</label><br />
+        <div class="input-group date" data-provide="datepicker">
+          <input type="text" class="form-control" id="startDate">
+          <div class="input-group-addon">
+            <span class="glyphicon glyphicon-th"></span>
+          </div>
+        </div>
+        <label>End Date</label>
+        <div class="input-group date" data-provide="datepicker">
+          <input type="text" class="form-control" id="endDate">
+          <div class="input-group-addon">
+            <span class="glyphicon glyphicon-th"></span>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm" id="date-button">Filter by Date</button>
+      </div>
+      <div class="form-group">
+        <input type="text" id="search-text" class="input-group form-control" />
+        <button type="submit" class="btn btn-primary btn-sm" id="search-button">Search</button>
+        <button type="submit" class="btn btn-primary btn-sm" id="reset-button">Reset Map</button>
+      </div>
+    </div>
+    <div class="col-xs-8 full-height white-container">
+      <div id="map"></div>
+    </div>
+    <div class="col-xs-2 full-height white-container">
+      <label>The following map shows tweets and crisis events. Select a marker to view the message(s) below.</label><br />
+      <div id="incidentProgress">&nbsp;</div>
+      <ul class="list-group" id="tweetList" />
+    </div>
+  </div>
+</div>
+
+@section Scripts {
+  <script src="/js/simpleMap.js"></script>
+  <script async defer
+          src="https://maps.googleapis.com/maps/api/js?key=@MyCredentials.GOOGLE_MAPS_APIKEY&callback=initMap"></script>
+}
